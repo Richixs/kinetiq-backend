@@ -32,8 +32,21 @@ jobs:
         with:
           python-version-file: ".python-version"
 
+      - name: Install system dependencies for manim
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            libcairo2-dev \
+            libpango1.0-dev \
+            ffmpeg \
+            sox \
+            libsox-dev \
+            texlive-latex-base \
+            texlive-fonts-recommended \
+            texlive-latex-extra
+
       - name: Install dependencies
-        run: uv sync
+        run: uv sync --all-extras --dev
 
       - name: Check Python Syntax
         run: uv run python -m compileall app
