@@ -14,9 +14,9 @@ jobs:
     name: Build and Compile Check
     runs-on: ubuntu-latest
     env:
-			PROJECT_NAME: "Kinetiq API"
-			ENVIRONMENT: "local"
-			DEBUG: true
+      PROJECT_NAME: "Kinetiq API"
+      ENVIRONMENT: "local"
+      DEBUG: true
 
     steps:
       - name: Checkout code
