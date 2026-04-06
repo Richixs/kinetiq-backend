@@ -8,5 +8,6 @@ dependencies = [
     "fastapi>=0.135.2",
     "manim>=0.19.1",
     "pydantic-settings>=2.13.1",
+    "pylint>=4.0.5",
     "uvicorn>=0.42.0",
 ]
