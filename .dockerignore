@@ -1,78 +1,42 @@
-# Git
 .git
 .gitignore
 .gitattributes
+.github
 
-# Python
 __pycache__/
 *.py[cod]
-*$py.class
 *.so
-.Python
-build/
-develop-eggs/
-dist/
-downloads/
-eggs/
-.eggs/
-lib/
-lib64/
-parts/
-sdist/
-var/
-wheels/
-*.egg-info/
-.installed.cfg
-*.egg
-MANIFEST
 .pytest_cache/
+.mypy_cache/
+.ruff_cache/
 .coverage
 htmlcov/
 .tox/
 .hypothesis/
 
-# Virtual Environment
-.env
-.env.local
-.env.*.local
-.venv
-env/
+.venv/
 venv/
-ENV/
-env.bak/
-venv.bak/
+env/
 
-# IDEs
-.idea/
 .vscode/
+.idea/
 *.swp
 *.swo
 *~
-*.iml
 
-# OS
 .DS_Store
 Thumbs.db
 
-# Docker
-Dockerfile
-docker-compose.yml
-.dockerignore
+.env
+.env.*
+!.env.example
 
-# Project specific
-.database-pg/
-postgres_data/
-migrations/__pycache__/
+build/
+dist/
+*.egg-info/
 
-# Documentation
-docs/
-*.md
-
-# CI/CD
-.github/
-.gitlab-ci.yml
-.travis.yml
-
-# Logs
-*.log
 logs/
+*.log
+
+postgres_data/
+.database-pg/
