@@ -42,6 +42,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 	libx11-6 \
 	ffmpeg \
 	texlive-latex-base \
+	texlive-latex-extra \
 	texlive-fonts-recommended \
 	dvisvgm \
 	&& rm -rf /var/lib/apt/lists/*
