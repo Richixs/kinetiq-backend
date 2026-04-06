@@ -41,6 +41,9 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 	libgl1 \
 	libx11-6 \
 	ffmpeg \
+	texlive-latex-base \
+	texlive-fonts-recommended \
+	dvisvgm \
 	&& rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
