@@ -88,6 +88,8 @@ class MovilVisuals:
 
 
 class MRUScene(Scene):
+    """Parametrized MRU (1D uniform motion) scene with multiple moviles."""
+
     def __init__(
         self,
         t_max: float,
@@ -276,7 +278,7 @@ class MRUScene(Scene):
 
         return VGroup(dot, letter, arrow, pos_value)
 
-    def _add_graph(
+    def _add_graph(  # pylint: disable=too-many-arguments,too-many-positional-arguments
         self,
         position,
         y_range: tuple[float, float],
@@ -342,7 +344,7 @@ class MRUScene(Scene):
         )
         return segments
 
-    def _progressive_segment(
+    def _progressive_segment(  # pylint: disable=too-many-arguments,too-many-positional-arguments
         self,
         axes: Axes,
         func: Callable[[float], float],

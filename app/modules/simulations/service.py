@@ -22,15 +22,22 @@ _render_lock = threading.Lock()
 
 @dataclass
 class RenderResult:
+    """Output of a successful Manim render."""
+
     video_path: Path
     _workdir: Path
 
     def cleanup(self) -> None:
+        """Remove the temporary render directory."""
         shutil.rmtree(self._workdir, ignore_errors=True)
 
 
+# pylint: disable=too-few-public-methods
 class SimulationService:
+    """Render a SimulationRequest to an MP4 using Manim."""
+
     def render(self, request: SimulationRequest) -> RenderResult:
+        """Run the Manim scene and return the path to the resulting video."""
         workdir = Path(tempfile.mkdtemp(prefix="kinetiq_"))
 
         overrides = {
