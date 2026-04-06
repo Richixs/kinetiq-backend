@@ -1,4 +1,7 @@
+"""Version 1 API router aggregation."""
+
 from fastapi import APIRouter
+
 from app.modules.health.router import router as health_router
 
 api_router = APIRouter()

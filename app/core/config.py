@@ -1,6 +1,11 @@
+"""Application settings and environment configuration."""
+
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
+
 class Settings(BaseSettings):
+    """Runtime settings loaded from defaults and environment variables."""
+
     PROJECT_NAME: str = "Kinetiq API"
     API_V1_STR: str = "/api/v1"
     ENVIRONMENT: str = "local"
