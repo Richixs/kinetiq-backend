@@ -154,14 +154,23 @@ class MRUScene(Scene):
         return 10 * power
 
     def _make_visuals(self) -> list[MovilVisuals]:
-        max_v_abs = max((abs(m.v) for m in self.moviles), default=1.0) or 1.0
+        # Pick arrow scale from the peak |v| reached across the simulation,
+        # not just the initial |v|. For MRUV v(t) is linear in t, so the
+        # extremum sits at one of the endpoints (t_start or t_max).
+        peak_v_abs = max(
+            (
+                max(abs(m.v), abs(self._v_of_t(m, self.t_max)))
+                for m in self.moviles
+            ),
+            default=1.0,
+        ) or 1.0
         return [
             MovilVisuals(
                 movil=m,
                 color=ManimColor(m.color),
                 label_buff=LABEL_BUFF_BASE + idx * LABEL_BUFF_STEP,
                 pos_buff=POS_BUFF_BASE + idx * POS_BUFF_STEP,
-                arrow_scale=ARROW_UNIT_LENGTH / max_v_abs,
+                arrow_scale=ARROW_UNIT_LENGTH / peak_v_abs,
             )
             for idx, m in enumerate(self.moviles)
         ]
