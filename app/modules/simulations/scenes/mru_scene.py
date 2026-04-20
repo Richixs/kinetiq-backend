@@ -1,10 +1,7 @@
-"""Manim scene for 1D kinematics (MRU) with multiple móviles.
+"""Manim scene for 1D kinematics with multiple móviles.
 
-The scene is intentionally decoupled from the Pydantic `Movil` model — it
-only reads the attributes `label`, `x_0`, `v`, `t_start`, `color`, and `a`
-(default 0 for MRU). The physics formula is written for MRUV from day one
-(`x(t) = x₀ + v·Δt + ½·a·Δt²`); MRU is just the `a == 0` case. When MRUV
-ships, the caller will start passing nonzero `a` and no scene code changes.
+Handles MRU and MRUV uniformly via the general formula
+`x(t) = x₀ + v·Δt + ½·a·Δt²`; MRU is the `a == 0` special case.
 """
 
 from __future__ import annotations
@@ -88,7 +85,7 @@ class MovilVisuals:
 
 
 class MRUScene(Scene):
-    """Parametrized MRU (1D uniform motion) scene with multiple moviles."""
+    """Parametrized 1D kinematics scene (MRU + MRUV) with multiple moviles."""
 
     def __init__(
         self,
@@ -103,7 +100,7 @@ class MRUScene(Scene):
         self.number_line: NumberLine | None = None
 
     # ------------------------------------------------------------------ #
-    # Physics — written for MRUV, MRU is the a == 0 special case.        #
+    # Physics — MRUV general form; MRU is the a == 0 special case.       #
     # ------------------------------------------------------------------ #
 
     @staticmethod
@@ -157,14 +154,23 @@ class MRUScene(Scene):
         return 10 * power
 
     def _make_visuals(self) -> list[MovilVisuals]:
-        max_v_abs = max((abs(m.v) for m in self.moviles), default=1.0) or 1.0
+        # Pick arrow scale from the peak |v| reached across the simulation,
+        # not just the initial |v|. For MRUV v(t) is linear in t, so the
+        # extremum sits at one of the endpoints (t_start or t_max).
+        peak_v_abs = max(
+            (
+                max(abs(m.v), abs(self._v_of_t(m, self.t_max)))
+                for m in self.moviles
+            ),
+            default=1.0,
+        ) or 1.0
         return [
             MovilVisuals(
                 movil=m,
                 color=ManimColor(m.color),
                 label_buff=LABEL_BUFF_BASE + idx * LABEL_BUFF_STEP,
                 pos_buff=POS_BUFF_BASE + idx * POS_BUFF_STEP,
-                arrow_scale=ARROW_UNIT_LENGTH / max_v_abs,
+                arrow_scale=ARROW_UNIT_LENGTH / peak_v_abs,
             )
             for idx, m in enumerate(self.moviles)
         ]
@@ -206,7 +212,7 @@ class MRUScene(Scene):
 
     def _add_title(self) -> None:
         self.add(
-            Text("Simulación MRU", font_size=TITLE_FONT, color=WHITE).to_edge(
+            Text("Simulación de cinemática", font_size=TITLE_FONT, color=WHITE).to_edge(
                 UP, buff=0.25
             )
         )

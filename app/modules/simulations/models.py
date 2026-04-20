@@ -1,8 +1,7 @@
 """Pydantic models for the kinematics simulation module.
 
-The schema is intentionally designed so that adding MRUV in a future version
-is purely additive: the `a` (acceleration) field already exists on `Movil`
-and defaults to 0, so MRU is the special case `a == 0`.
+Supports both MRU and MRUV uniformly: the `a` (acceleration) field on
+`Movil` defaults to 0 (pure MRU), and any nonzero value makes it MRUV.
 """
 
 from typing import List
@@ -33,10 +32,7 @@ class Movil(BaseModel):
     )
     a: float = Field(
         0.0,
-        description=(
-            "Aceleración en m/s². Reservado para MRUV futuro; en v1 debe ser 0 "
-            "y los clientes MRU pueden omitirlo."
-        ),
+        description="Aceleración en m/s² (default 0 = MRU, distinto de 0 = MRUV).",
     )
 
 
