@@ -25,7 +25,7 @@ app/
         ├── controller.py   # HTTP boundary
         ├── router.py       # Route definitions
         └── scenes/
-            └── mru_scene.py  # Parametrized Manim scene for MRU
+            └── mru_scene.py  # Parametrized Manim scene (MRU + MRUV)
 ```
 
 ## System Prerequisites
@@ -105,7 +105,7 @@ Once the server is running, FastAPI automatically generates interactive document
 
 ### `POST /api/v1/simulations/render`
 
-Renders a 1D kinematics simulation (MRU) using Manim and returns an MP4 video.
+Renders a 1D kinematics simulation (MRU or MRUV) using Manim and returns an MP4 video.
 
 **Request body:**
 
@@ -113,20 +113,21 @@ Renders a 1D kinematics simulation (MRU) using Manim and returns an MP4 video.
 {
   "t_max": 20,
   "moviles": [
-    { "label": "A", "x_0": 0,  "v":  5, "t_start": 0, "color": "#e74c3c" },
-    { "label": "B", "x_0": 80, "v": -3, "t_start": 2, "color": "#3498db" }
+    { "label": "A", "x_0": 0,  "v":  5, "a": 0,   "t_start": 0, "color": "#e74c3c" },
+    { "label": "B", "x_0": 80, "v": -3, "a": 0.5, "t_start": 2, "color": "#3498db" }
   ]
 }
 ```
 
-| Field     | Type   | Description                                     |
-| --------- | ------ | ----------------------------------------------- |
-| `t_max`   | float  | Total physical simulation time in seconds       |
-| `label`   | string | Short name for the movil (max 4 characters)     |
-| `x_0`     | float  | Initial position in meters                      |
-| `v`       | float  | Velocity in m/s (sign determines direction)     |
-| `t_start` | float  | Time at which the movil starts moving (default 0) |
-| `color`   | string | Hex color code (#RRGGBB)                        |
+| Field     | Type   | Description                                              |
+| --------- | ------ | -------------------------------------------------------- |
+| `t_max`   | float  | Total physical simulation time in seconds                |
+| `label`   | string | Short name for the movil (max 4 characters)              |
+| `x_0`     | float  | Initial position in meters                               |
+| `v`       | float  | Initial velocity in m/s (sign determines direction)      |
+| `a`       | float  | Acceleration in m/s² (default 0 = MRU, nonzero = MRUV)   |
+| `t_start` | float  | Time at which the movil starts moving (default 0)        |
+| `color`   | string | Hex color code (#RRGGBB)                                 |
 
 **Response:** `video/mp4` (binary stream)
 

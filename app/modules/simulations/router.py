@@ -15,7 +15,7 @@ router = APIRouter()
     responses={
         200: {
             "content": {"video/mp4": {}},
-            "description": "Rendered MRU simulation as an MP4 video.",
+            "description": "Rendered kinematics simulation (MRU/MRUV) as an MP4 video.",
         }
     },
 )
@@ -23,5 +23,5 @@ def render_simulation(
     request: SimulationRequest,
     controller: SimulationController = Depends(),
 ) -> FileResponse:
-    """Render an MRU kinematics simulation and return the resulting MP4."""
+    """Render a 1D kinematics simulation (MRU or MRUV) and return the resulting MP4."""
     return controller.render_simulation(request)

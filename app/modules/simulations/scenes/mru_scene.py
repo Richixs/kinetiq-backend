@@ -1,10 +1,7 @@
-"""Manim scene for 1D kinematics (MRU) with multiple móviles.
+"""Manim scene for 1D kinematics with multiple móviles.
 
-The scene is intentionally decoupled from the Pydantic `Movil` model — it
-only reads the attributes `label`, `x_0`, `v`, `t_start`, `color`, and `a`
-(default 0 for MRU). The physics formula is written for MRUV from day one
-(`x(t) = x₀ + v·Δt + ½·a·Δt²`); MRU is just the `a == 0` case. When MRUV
-ships, the caller will start passing nonzero `a` and no scene code changes.
+Handles MRU and MRUV uniformly via the general formula
+`x(t) = x₀ + v·Δt + ½·a·Δt²`; MRU is the `a == 0` special case.
 """
 
 from __future__ import annotations
@@ -88,7 +85,7 @@ class MovilVisuals:
 
 
 class MRUScene(Scene):
-    """Parametrized MRU (1D uniform motion) scene with multiple moviles."""
+    """Parametrized 1D kinematics scene (MRU + MRUV) with multiple moviles."""
 
     def __init__(
         self,
@@ -103,7 +100,7 @@ class MRUScene(Scene):
         self.number_line: NumberLine | None = None
 
     # ------------------------------------------------------------------ #
-    # Physics — written for MRUV, MRU is the a == 0 special case.        #
+    # Physics — MRUV general form; MRU is the a == 0 special case.       #
     # ------------------------------------------------------------------ #
 
     @staticmethod
@@ -206,7 +203,7 @@ class MRUScene(Scene):
 
     def _add_title(self) -> None:
         self.add(
-            Text("Simulación MRU", font_size=TITLE_FONT, color=WHITE).to_edge(
+            Text("Simulación de cinemática", font_size=TITLE_FONT, color=WHITE).to_edge(
                 UP, buff=0.25
             )
         )
